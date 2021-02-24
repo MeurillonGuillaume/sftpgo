@@ -201,7 +201,7 @@ func (fs *GCSFs) Create(name string, flag int) (File, *PipeWriter, func(), error
 
 		n, err := io.Copy(objectWriter, r)
 		closeErr := objectWriter.Close()
-		if err == nil {
+		if err == nil || err == io.EOF {
 			err = closeErr
 		}
 		r.CloseWithError(err) //nolint:errcheck
